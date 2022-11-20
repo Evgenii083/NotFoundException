@@ -6,6 +6,7 @@ public class RepositoryTest {
     Product item1 = new Product("Product1", 1, 1);
     Product item2 = new Product("Product2", 2, 2);
     Product item3 = new Product("Product3", 3, 3);
+    Product item4 = new Product("Product4", 3, 3);
 
 
     @Test
@@ -19,6 +20,18 @@ public class RepositoryTest {
         Product[] actual = repo.getItems();
         Assertions.assertArrayEquals(expected, actual);
 
+    }
+
+    @Test
+    public void shouldNotSaveItemWithTheSameId() {
+        Repository repo = new Repository();
+        repo.save(item1);
+        repo.save(item2);
+        repo.save(item3);
+
+        Assertions.assertThrows(AlreadyExistsException.class, () -> {
+            repo.save(item4);
+        });
     }
 
     @Test
@@ -47,7 +60,7 @@ public class RepositoryTest {
     }
 
     @Test
-    public void shouldNotDeleteByWrongID(){
+    public void shouldNotDeleteByWrongID() {
         Repository repo = new Repository();
         repo.save(item1);
         repo.save(item2);

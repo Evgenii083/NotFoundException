@@ -1,6 +1,6 @@
-public class NegativeIdException extends RuntimeException{
+public class NegativeIdException extends RuntimeException {
 
-    public NegativeIdException(String msg){
+    public NegativeIdException(String msg) {
         super(msg);
     }
 }

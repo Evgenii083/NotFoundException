@@ -1,9 +1,14 @@
 import org.example.Exception.project.*;
 
+import java.nio.file.FileAlreadyExistsException;
+
 public class Repository {
     Product[] items = new Product[0];
 
     public void save(Product item) {
+        if (this.findById(item.getId()) != null) {
+            throw new AlreadyExistsException("Продукт с такаим id уже есть" + item.getId());
+        }
         Product[] tmp = new Product[items.length + 1];
         for (int i = 0; i < items.length; i++) {
             tmp[i] = items[i];
@@ -16,8 +21,8 @@ public class Repository {
         if (id < 0) {
             throw new NegativeIdException("Id не может быть отрицательным" + id);
         }
-        if(findById(id)==null){
-            throw new NegativeIdException("Нет такого id"+id);
+        if (findById(id) == null) {
+            throw new NegativeIdException("Нет такого id" + id);
         }
         Product[] tmp = new Product[items.length - 1];
         int copyToIndex = 0;
@@ -30,14 +35,15 @@ public class Repository {
         items = tmp;
     }
 
-    public Product findById(int id){
-        for(Product items : items){
-            if(items.getProductId()==id){
+    public Product findById(int id) {
+        for (Product items : items) {
+            if (items.getProductId() == id) {
                 return items;
             }
         }
         return null;
     }
+
     public Product[] getItems() {
         return items;
     }
